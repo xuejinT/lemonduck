@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Map Test</title>
+    <style>
+        #map {
+            height: 400px;
+            width: 100%;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Google Maps API Test</h1>
+    <p>This is a simple test to verify your Google Maps API key is working correctly.</p>
+    <div id="map"></div>
+    <div id="status"></div>
+
+    <script>
+        // Initialize the map
+        function initMap() {
+            try {
+                // Create a map centered on a default location
+                const map = new google.maps.Map(document.getElementById('map'), {
+                    center: { lat: 37.0902, lng: -95.7129 }, // Center of US
+                    zoom: 4
+                });
+                document.getElementById('status').innerHTML = '<p style="color: green;">✓ Map loaded successfully! Your API key is working.</p>';
+            } catch (e) {
+                document.getElementById('status').innerHTML = '<p style="color: red;">✗ Error initializing map: ' + e.message + '</p>';
+            }
+        }
+
+        // Handle Google Maps API errors
+        function gm_authFailure() {
+            document.getElementById('map').innerHTML = '<p style="color: red; padding: 20px;">Authentication error with Google Maps API key</p>';
+            document.getElementById('status').innerHTML = `
+                <p style="color: red;">✗ API key error. Please check:</p>
+                <ul>
+                    <li>API key is correct</li>
+                    <li>Maps JavaScript API is enabled in Google Cloud Console</li>
+                    <li>Billing is enabled on your Google Cloud account</li>
+                    <li>Any API restrictions (website domain, IP, etc.) are configured correctly</li>
+                </ul>
+                <p>Visit <a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a> to manage your API keys.</p>
+            `;
+        }
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIcUZejFKahF4BbCMEjgvTRps1d6kRzW0&callback=initMap">
+    </script>
+</body>
+</html>

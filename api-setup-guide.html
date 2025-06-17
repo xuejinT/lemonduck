@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Maps API Setup Guide</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #3498db;
+            margin-top: 30px;
+        }
+        .step {
+            background-color: #f9f9f9;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        img {
+            max-width: 100%;
+            border: 1px solid #ddd;
+            margin: 15px 0;
+        }
+        code {
+            background-color: #f5f5f5;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+        .note {
+            background-color: #fffbea;
+            border-left: 4px solid #f1c40f;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Google Maps API Setup Guide</h1>
+    
+    <p>This guide will help you set up the necessary Google Maps APIs for the Scenic Drive Navigator application.</p>
+    
+    <div class="note">
+        <strong>Note:</strong> Google Maps Platform requires a billing account, but they offer a $200 monthly credit, which is enough for most small applications.
+    </div>
+    
+    <h2>Step 1: Create a Google Cloud Project</h2>
+    
+    <div class="step">
+        <ol>
+            <li>Go to the <a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a></li>
+            <li>Click on the project dropdown at the top of the page</li>
+            <li>Click "New Project"</li>
+            <li>Enter a name for your project and click "Create"</li>
+        </ol>
+    </div>
+    
+    <h2>Step 2: Enable Billing</h2>
+    
+    <div class="step">
+        <ol>
+            <li>In the Google Cloud Console, go to "Billing"</li>
+            <li>Link a billing account to your project</li>
+            <li>If you don't have a billing account, create one (you'll need to provide credit card information)</li>
+        </ol>
+    </div>
+    
+    <h2>Step 3: Enable the Required APIs</h2>
+    
+    <div class="step">
+        <ol>
+            <li>In the Google Cloud Console, go to "APIs & Services" > "Library"</li>
+            <li>Search for and enable the following APIs:
+                <ul>
+                    <li>Maps JavaScript API</li>
+                    <li>Directions API</li>
+                    <li>Places API</li>
+                </ul>
+            </li>
+            <li>For each API, click on it and then click the "Enable" button</li>
+        </ol>
+    </div>
+    
+    <h2>Step 4: Create an API Key</h2>
+    
+    <div class="step">
+        <ol>
+            <li>In the Google Cloud Console, go to "APIs & Services" > "Credentials"</li>
+            <li>Click "Create Credentials" > "API Key"</li>
+            <li>Your new API key will be displayed</li>
+            <li>Copy this key and replace <code>YOUR_API_KEY</code> in the application's HTML file</li>
+        </ol>
+    </div>
+    
+    <h2>Step 5: Set API Key Restrictions (Optional but Recommended)</h2>
+    
+    <div class="step">
+        <ol>
+            <li>In the credentials page, click on your newly created API key</li>
+            <li>Under "Application restrictions", you can restrict which websites can use your key</li>
+            <li>Under "API restrictions", you can restrict which APIs this key can access</li>
+            <li>Click "Save" when done</li>
+        </ol>
+    </div>
+    
+    <div class="note">
+        <strong>Important:</strong> If you're testing locally, make sure to add <code>localhost</code> to the allowed referrers if you set application restrictions.
+    </div>
+    
+    <h2>Troubleshooting</h2>
+    
+    <p>If you're still having issues after following these steps:</p>
+    
+    <ul>
+        <li>Make sure all three required APIs are enabled</li>
+        <li>Check that billing is properly set up</li>
+        <li>Verify that your API key doesn't have overly restrictive settings</li>
+        <li>Try creating a new API key without restrictions for testing</li>
+        <li>Allow 5-10 minutes for API changes to propagate</li>
+    </ul>
+    
+    <p><a href="index.html">Return to the Scenic Drive Navigator</a></p>
+</body>
+</html>

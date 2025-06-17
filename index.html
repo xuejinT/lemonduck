@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scenic Drive Navigator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Scenic Drive Navigator</h1>
+            <p>Discover beautiful routes for your next road trip</p>
+        </header>
+        
+        <div class="search-container">
+            <input type="text" id="start-location" placeholder="Starting location">
+            <input type="text" id="end-location" placeholder="Destination">
+            <select id="route-preference">
+                <option value="scenic">Most Scenic</option>
+                <option value="coastal">Coastal Views</option>
+                <option value="mountain">Mountain Roads</option>
+                <option value="forest">Forest Drives</option>
+                <option value="historic">Historic Routes</option>
+            </select>
+            <button id="find-route">Find Scenic Route</button>
+        </div>
+        
+        <div id="map-status"></div>
+        <div id="map"></div>
+        
+        <div class="route-info">
+            <h2>Route Information</h2>
+            <div id="route-details">
+                <p>Select a starting point and destination to see route details.</p>
+            </div>
+            
+            <div id="route-comparison" style="display: none;">
+                <h3>Route Comparison</h3>
+                <div class="comparison-container">
+                    <div class="comparison-column">
+                        <h4>Scenic Route</h4>
+                        <div id="scenic-route-details"></div>
+                    </div>
+                    <div class="comparison-column">
+                        <h4>Fastest Route</h4>
+                        <div id="fastest-route-details"></div>
+                    </div>
+                </div>
+                <div class="comparison-summary" id="route-comparison-summary"></div>
+            </div>
+            
+            <div id="send-to-phone" style="display: none;">
+                <button id="send-directions-btn" class="action-button">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                        <line x1="12" y1="18" x2="12" y2="18"></line>
+                    </svg>
+                    Send to Phone
+                </button>
+                <div id="qrcode-container" style="display: none;">
+                    <p>Scan this QR code with your phone:</p>
+                    <div id="qrcode"></div>
+                    <p class="small-text">Or open this link:</p>
+                    <a id="directions-link" href="#" target="_blank" class="small-text"></a>
+                </div>
+            </div>
+            
+            <div id="scenic-points">
+                <h3>Scenic Points</h3>
+                <div id="points-list-container">
+                    <ul id="points-list"></ul>
+                </div>
+                <div id="point-details" style="display: none;">
+                    <div class="point-header">
+                        <button id="back-to-list" class="back-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="19" y1="12" x2="5" y2="12"></line>
+                                <polyline points="12 19 5 12 12 5"></polyline>
+                            </svg>
+                            Back to list
+                        </button>
+                    </div>
+                    <h4 id="point-name"></h4>
+                    <div class="point-image-container">
+                        <img id="point-image" src="" alt="Scenic point image">
+                        <div id="image-loading" class="image-loading">Loading image...</div>
+                        <div id="image-error" class="image-error" style="display: none;">No image available</div>
+                    </div>
+                    <div id="point-info">
+                        <p id="point-description"></p>
+                        <div id="point-details-list"></div>
+                    </div>
+                    <div class="point-actions">
+                        <button id="view-on-map" class="action-button small">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                            View on Map
+                        </button>
+                        <a id="directions-to-point" href="#" target="_blank" class="action-button small">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="9 18 15 12 9 6"></polyline>
+                            </svg>
+                            Directions
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="qrcode.min.js"></script>
+    <script>
+        // Minimal script to test if the map works
+        let map;
+        
+        function initMap() {
+            try {
+                document.getElementById('map-status').innerHTML = '<p>Attempting to create map...</p>';
+                
+                // Create a simple map centered on the US
+                map = new google.maps.Map(document.getElementById('map'), {
+                    center: { lat: 37.0902, lng: -95.7129 },
+                    zoom: 4
+                });
+                
+                document.getElementById('map-status').innerHTML = '<p style="color: green;">✓ Map created successfully!</p>';
+                
+                // If map loads successfully, load the full application script
+                const script = document.createElement('script');
+                script.src = 'script.js';
+                document.body.appendChild(script);
+            } catch (e) {
+                document.getElementById('map-status').innerHTML = '<p style="color: red;">✗ Error creating map: ' + e.message + '</p>';
+                console.error('Map initialization error:', e);
+            }
+        }
+
+        function gm_authFailure() {
+            document.getElementById('map-status').innerHTML = '<p style="color: red;">✗ Google Maps API key authentication error</p>';
+        }
+    </script>
+
+    <!-- Load the Google Maps API with your key -->
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIcUZejFKahF4BbCMEjgvTRps1d6kRzW0&libraries=places&callback=initMap">
+    </script>
+</body>
+</html>
